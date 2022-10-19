@@ -1,0 +1,16 @@
+language: generic 
+#tell travis we need superuser access permision 
+sudo: required
+
+#tell travis that we need docker as pre-installed
+services:
+  - docker
+
+#series of different commands before run our test
+#first build our docker image with Dockerfile.dev (Dockerfile.dev is an image) the dot means use the current directory 
+#docker build -t (means tag) docker username(jimplementations)github file (docker-project) -f Dockerfile.dev 
+before_install:
+  - docker build -t jimplementations/docker-project -f Dockerfile.dev .
+
+script:    
+  - docker run -e CI=true jimplementations/docker-projects npm run test
